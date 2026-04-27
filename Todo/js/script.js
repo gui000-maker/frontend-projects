@@ -1,6 +1,8 @@
 const todoForm = document.getElementById("todoForm");
 const todoInput = document.getElementById("todoInput");
+const todoCount = document.getElementById("todoCount");
 const todoList = document.getElementById("todoList");
+const clearButton = document.getElementById("clearButton");
 let todoItems = [];
 
 todoForm.addEventListener("submit", (event) => {
@@ -12,6 +14,12 @@ todoForm.addEventListener("submit", (event) => {
   }
 });
 
+clearButton.addEventListener("click", () => {
+  todoItems = [];
+  renderTodoList();
+  updateTodoCount();
+});
+
 const addTodoItem = (text) => {
   const todoItem = {
     id: Date.now(),
@@ -20,6 +28,7 @@ const addTodoItem = (text) => {
   };
   todoItems.push(todoItem);
   renderTodoList();
+  updateTodoCount();
 };
 
 const renderTodoList = () => {
@@ -47,5 +56,25 @@ const renderTodoList = () => {
     li.appendChild(completedButton);
     li.appendChild(deleteButton);
     todoList.appendChild(li);
+    saveTodos();
+    updateTodoCount();
   });
 };
+
+const saveTodos = () => {
+  localStorage.setItem("todoItems", JSON.stringify(todoItems));
+};
+
+const updateTodoCount = () => {
+  todoCount.textContent = `Total Todos: ${todoItems.length}`;
+};
+
+const loadTodos = () => {
+  const storedTodos = localStorage.getItem("todoItems");
+  if (storedTodos !== null) {
+    todoItems = JSON.parse(storedTodos);
+  }
+};
+
+loadTodos();
+renderTodoList();
