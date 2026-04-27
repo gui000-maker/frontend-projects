@@ -3,7 +3,7 @@ const todoInput = document.getElementById("todoInput");
 const todoList = document.getElementById("todoList");
 let todoItems = [];
 
-todoForm.addEventListener("submit", function (event) {
+todoForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const todoText = todoInput.value.trim();
   if (todoText !== "") {
@@ -12,7 +12,7 @@ todoForm.addEventListener("submit", function (event) {
   }
 });
 
-function addTodoItem(text) {
+const addTodoItem = (text) => {
   const todoItem = {
     id: Date.now(),
     text: text,
@@ -20,27 +20,27 @@ function addTodoItem(text) {
   };
   todoItems.push(todoItem);
   renderTodoList();
-}
+};
 
-function renderTodoList() {
+const renderTodoList = () => {
   todoList.innerHTML = "";
-  todoItems.forEach(function (todoItem) {
+  todoItems.forEach((todoItem) => {
     const li = document.createElement("li");
     li.textContent = todoItem.text;
 
-    deleteButton = document.createElement("button");
+    const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
-    deleteButton.addEventListener("click", function () {
+    deleteButton.addEventListener("click", () => {
       todoItems = todoItems.filter((item) => item.id !== todoItem.id);
       renderTodoList();
     });
 
-    completedButton = document.createElement("button");
+    const completedButton = document.createElement("button");
     completedButton.textContent = todoItem.completed
-      ? "Completed"
+      ? "Mark as Incomplete"
       : "Mark as Completed";
-    completedButton.addEventListener("click", function () {
-      todoItem.completed = true;
+    completedButton.addEventListener("click", () => {
+      todoItem.completed = !todoItem.completed;
       renderTodoList();
     });
 
@@ -48,4 +48,4 @@ function renderTodoList() {
     li.appendChild(deleteButton);
     todoList.appendChild(li);
   });
-}
+};
