@@ -3,6 +3,7 @@ const message = document.getElementById("message");
 const userList = document.getElementById("userList");
 
 loadButton.addEventListener("click", () => {
+    message.textContent = ""; // Clear any previous messages
     message.textContent = "Loading users...";
     userList.innerHTML = ""; // Clear previous results
 
